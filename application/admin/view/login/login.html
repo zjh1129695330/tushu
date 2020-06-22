@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CoreUI Bootstrap 4 Admin Template">
+    <meta name="author" content="Lukasz Holeczek">
+    <meta name="keyword" content="CoreUI Bootstrap 4 Admin Template">
+    <title>登录</title>
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/css/simple-line-icons.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+<body class="app flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card-group mb-0">
+                    <div class="card p-2">
+                        <div class="card-block">
+                        <form action="">
+                            <h1>登录</h1>
+                            <p class="text-muted">登录到您的帐户</p>
+                            <div class="input-group mb-1">
+                                <span class="input-group-addon"><i class="icon-user"></i>
+                                </span>
+                                <input type="text" id="username" name="username" class="form-control" placeholder="管理员账号">
+                            </div>
+                            <div class="input-group mb-2">
+                                <span class="input-group-addon"><i class="icon-lock"></i>
+                                </span>
+                                <input type="password" id="password" name="password" class="form-control" placeholder="管理员密码">
+                            </div>
+                            <div class="input-group mb-1">
+                            <input type="text" id="code" name="code" class="form-control" placeholder="验证码">
+                            <span class="input-group-addon"><img src="{:captcha_src()}" alt="captcha"></span>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <button class="btn btn-lg btn-primary btn-block" type="submit" id="login">登录</button>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div class="card card-inverse card-primary py-3 hidden-md-down" style="width:44%">
+                        <div class="card-block text-center">
+                            <div>
+                                <h2>注册</h2>
+                                <p>洛雷姆·伊普苏姆·多洛尔坐立不安，奉献自私的高贵，节制的生活和活力，使辛酸与劳苦，一些重要的事情做好了。</p>
+                                <a type="submit" class="btn btn-primary active mt-1" href="{:url('admin/login/zhuce')}">立即注册</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   <script src="/static/libs/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/libs/layer/layer/layer.js"></script>
+    <script>
+        $(function() { //点击切换验证码图片
+            $('img[alt="captcha"]').click(function() {
+                $(this).attr('src', '{:captcha_src()}?' + Math.random());
+            });
+            $('#login').click(function() {
+                $.ajax({
+                    url: '{:url('admin/login/login')}', // 提交数据的地址
+                    type: 'POST', //提交方法
+                    data: $('form').serialize(), //提交的数据，使用表单系列化来生成数据
+                    dataType: 'json', //数据类型
+                })
+                .done(function(data) { // 返回结果之后的处理，data是返回的数据
+                    if (data.code == 1) { // code为1，操作成功
+                        layer.msg(data.msg, { //显示返回的信息
+                            icon: 6, //笑脸图标
+                            time: 2000, //两秒后自动消失
+                        }, function () { // 消息显示完毕之后的处理
+                            location = data.url; //跳转到指定地址
+                        });
+                    } else { // 操作失败
+                        layer.open({ //不会自动消失，需要手动关闭
+                            title: '登录失败', //弹窗标题
+                            content: data.msg, //弹窗内容
+                            icon: 5, //哭脸图标
+                            anim: 6, //左右晃动一下
+                        });
+                    }
+                });
+                return false;
+            });
+        });
+    </script>   
+</body>
+</html>

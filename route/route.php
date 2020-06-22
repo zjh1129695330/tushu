@@ -20,8 +20,8 @@ Route::group('admin',function(){
 	Route::rule('/','admin/index/index','get');
     Route::rule('login','admin/login/login','get|post');
     Route::rule('zc','admin/login/zhuce','get|post');
-    Route::rule('zhuce','admin/login/zc','post');
     Route::rule('logout','admin/login/logout','post');
+    
     Route::rule('cate','admin/cate/index','get|post');
     Route::rule('catesort','admin/cate/sort','get|post');
     Route::rule('cateadd','admin/cate/add','get|post');
