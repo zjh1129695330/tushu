@@ -1,0 +1,112 @@
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>新闻系统后台</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/dashboard.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">切换导航</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">新闻后台</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">{:session('admin.username')}</a></li>
+            <li><a href="#" id="logout">管理员注销</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="{:url('admin/index/index')}">后台首页</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+            <li><a href="{:url('admin/cate/index')}">栏目列表</a></li>
+            <li><a href="{:url('admin/cate/add')}">栏目添加</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+            <li><a href="{:url('admin/news/index')}">新闻列表</a></li>
+            <li><a href="{:url('admin/news/add')}">新闻添加</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">后台首页</h1>
+          <div class="mell">
+          	<h1>{:session('admin.username')},欢迎访问新闻系统后台！</h1>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th colspan="2">服务器信息</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>服务器域名</td>
+                  <td>{$Request.domain}</td>
+                </tr>
+                <tr>
+                  <td>服务器IP</td>
+                  <td>{$Request.ip}</td>
+                </tr>
+                <tr>
+                  <td>服务器端口</td>
+                  <td>{$Request.port}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/static/libs/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+	<script src="/static/libs/layer/layer/layer.js"></script>
+	<script>
+		$(function() {
+			$('#logout').click(function() {
+				$.ajax({
+					url:'{:url('admin/login/logout')}',
+					type:'POST',
+					dataType:'json',
+				})
+				.done(function(data){
+					if(data.code==1){
+						layer.msg(data.msg, {
+							icon:6,
+							time:2000
+						}, function() {
+							location=data.url;
+						});
+					}else{
+						layer.open({
+							title:'注销失败',
+							content:data.msg,
+							icon:5,
+							anim:6
+						});
+					}
+				});
+				return false;
+			});
+		});
+	</script>
+  </body>
+</html>

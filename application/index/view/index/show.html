@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{$news.title}-新闻发布系统</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/blog.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item {if !$cateid} active {/if}" href="{:url('index/index/index')}">首页</a>
+          &nbsp;&nbsp;
+          {volist name='cates' id='cate'}
+          <a class="blog-nav-item{if $news.cate_id==$cate.id} active {/if}" href="{:url('index/index/index',['id'=>$cate.id])}">
+          &nbsp;&nbsp;{$cate.catename}</a>
+          &nbsp;&nbsp;
+          {/volist}
+        </nav>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="blog-header">
+        <h1 class="blog-title">新闻发布系统</h1>
+        <p class="lead blog-description">一个简单的新闻发布系统的教学示例</p>
+      </div>
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+          <div class="blog-post">
+            <h2 class="blog-post-title">{$news.title}</h2>
+            <p class="blog-post-meta">所属栏目:[<a href="{:url('index/index/index',['id'=>$news.cate_id])}">{$news.cate.catename}</a>]&nbsp;&nbsp;作者:[<a href="{:url('index/index/admins',['id'=>$news.admin_id])}">{$news.admin.username}</a>]&nbsp;&nbsp;发表于:{$news.create_time|date='Y-m-d H:i'}</p>
+            <p class="blog-post-meta">
+            	{$news.content|raw}
+            </p>
+            <!-- 时间格式 -->
+            {//$news.create_time|date='F j, Y H:i a'}
+          </div><!-- /.blog-post -->
+          <nav>
+          </nav>
+
+        <!-- /.blog-main -->
+        </div><!-- /.blog-main -->
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          <div class="sidebar-module sidebar-module-inset">
+            <h4>关于</h4>
+            <p>这是一个简单的新闻发布系统的教学示例使用tp5.1和bootstrop3实现这是一个简单的新闻发布系统的教学示例使用tp5.1和bootstrop3实现</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+    <footer class="blog-footer">
+      <p>
+        <a href="#">回到顶端</a>
+      </p>
+    </footer>
+    <script src="/static/libs/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+  <script src="/static/libs/layer/layer/layer.js"></script>
+  </body>
+</html>
