@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
@@ -7,64 +6,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>{$news.title}-新闻发布系统</title>
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/css/blog.css" rel="stylesheet">
+    <title>图书管理系统</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <link href="/static/css/justified-nav.css" rel="stylesheet">
+    <style type="text/css">
+      .fr{
+        float: right;
+        margin-right: 2em;
+      }
+      .jz{
+        text-align: center;
+      }
+      .fl{
+        float: left;
+      }
+      .sh{
+        text-indent: 2em;
+      }
+    </style>
   </head>
 
   <body>
-    <div class="blog-masthead">
-      <div class="container">
-        <nav class="blog-nav">
-          <a class="blog-nav-item {if !$cateid} active {/if}" href="{:url('index/index/index')}">首页</a>
-          &nbsp;&nbsp;
-          {volist name='cates' id='cate'}
-          <a class="blog-nav-item{if $news.cate_id==$cate.id} active {/if}" href="{:url('index/index/index',['id'=>$cate.id])}">
-          &nbsp;&nbsp;{$cate.catename}</a>
-          &nbsp;&nbsp;
-          {/volist}
-        </nav>
-      </div>
-    </div>
 
     <div class="container">
-      <div class="blog-header">
-        <h1 class="blog-title">新闻发布系统</h1>
-        <p class="lead blog-description">一个简单的新闻发布系统的教学示例</p>
+      <div class="masthead">
+        <h3 class="text-muted">图书管理系统</h3>
+        <nav>
+          <a href="{:url('admin/login/login')}" class="btn btn-info btn-sm fr">登录</a>
+          <br>
+          <br>
+          <ul class="nav nav-tabs">
+            <li class="active"><a class="btn btn-sm">{$books.title}</a></li>
+            <li><a class="btn btn-sm" href="{:url('index/index/book',['id'=>$books.cate_id])}">返回</a></li>
+          </ul>
+        </nav>
       </div>
+
+      <!-- Jumbotron -->
+      <div class="jumbotron">
+        <h1>您好!</h1>
+        <p class="lead">欢迎来到图书管理系统，管理员可以点击登录去添加书签和图书哦，点击右上角登录吧</p>
+      </div>
+
+      <!-- Example row of columns -->
       <div class="row">
-        <div class="col-sm-8 blog-main">
+        <div class="col-lg-12">
+          <h2 class="jz">图书类目信息</h2>
+      <div class="row">
+        <div class="col-sm-12 blog-main">
           <div class="blog-post">
-            <h2 class="blog-post-title">{$news.title}</h2>
-            <p class="blog-post-meta">所属栏目:[<a href="{:url('index/index/index',['id'=>$news.cate_id])}">{$news.cate.catename}</a>]&nbsp;&nbsp;作者:[<a href="{:url('index/index/admins',['id'=>$news.admin_id])}">{$news.admin.username}</a>]&nbsp;&nbsp;发表于:{$news.create_time|date='Y-m-d H:i'}</p>
+            <h3 class="blog-post-title jz">图书名称:{$books.title}</h3>
+            <p class="blog-post-meta jz">所属类目:[{$books.cate.catename}]&nbsp;&nbsp;添加于:{$books.create_time|date='Y-m-d H:i'}</p>
             <p class="blog-post-meta">
-            	{$news.content|raw}
+              <h4>图书简介:</h4>
+            	<p class="sh">{$books.content|raw}</p>
             </p>
-            <!-- 时间格式 -->
-            {//$news.create_time|date='F j, Y H:i a'}
-          </div><!-- /.blog-post -->
+          </div>
           <nav>
           </nav>
 
         <!-- /.blog-main -->
         </div><!-- /.blog-main -->
-        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-          <div class="sidebar-module sidebar-module-inset">
-            <h4>关于</h4>
-            <p>这是一个简单的新闻发布系统的教学示例使用tp5.1和bootstrop3实现这是一个简单的新闻发布系统的教学示例使用tp5.1和bootstrop3实现</p>
-          </div>
-        </div>
       </div>
     </div>
-  </div>
-  </div>
-    <footer class="blog-footer">
-      <p>
-        <a href="#">回到顶端</a>
-      </p>
-    </footer>
-    <script src="/static/libs/jquery.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-  <script src="/static/libs/layer/layer/layer.js"></script>
+      </div>
+      <footer class="footer">
+      </footer>
+
+    </div>
   </body>
 </html>

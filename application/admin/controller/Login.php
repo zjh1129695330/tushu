@@ -36,7 +36,7 @@ class Login extends Controller
                 $this->error('注销失败');
             }else{
 
-                $this->success('注销成功！','admin/login/login');
+                $this->success('注销成功！','index/index/index');
             }
         }
          public function zhuce()

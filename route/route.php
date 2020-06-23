@@ -40,9 +40,8 @@ Route::group('admin',function(){
     Route::rule('booksousuoxs/[:text]','admin/book/sousuoxs','get|post');
 });
 Route::rule('/','index/index/index','get');
-Route::rule('/id/[:id]','index/index/index','get');
+Route::rule('book/id/[:id]','index/index/book','get');
 Route::rule('/show/[:id]','index/index/show','get|post');
-Route::rule('index/index/admins/id/[:id]','index/index/admin','get|post');
 return [
 
 ];
