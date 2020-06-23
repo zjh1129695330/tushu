@@ -6,10 +6,9 @@ use think\Validate;
 
 class Cate extends Validate
 {
-
 	protected $rule = [
-        'catename|栏目名称'=>'require|unique:cate',//必填|检查重复
-    ];
+    'catename|类目名称' => 'require|unique:cate',
+  ];
 
-    // protected $message = [];
+  // protected $message = [];
 }

@@ -8,7 +8,7 @@
     <meta name="author" content="Łukasz Holeczek">
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,jQuery,CSS,HTML,RWD,Dashboard">
     <link rel="shortcut icon" href="img/favicon.png">
-    <title>图书管理系统类目页</title>
+    <title>图书管理系统类目回收站页</title>
     <link href="/static/css/font-awesome.min.css" rel="stylesheet">
     <link href="/static/css/simple-line-icons.css" rel="stylesheet">
     <link href="/static/css/style.css" rel="stylesheet">
@@ -57,52 +57,53 @@
         </div>
         <main class="main">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active">类目列表</li>
+            <li class="breadcrumb-item active">类目回收站</li>
         </ol>
-        <a href="{:url('admin/cate/recycle')}" class="btn btn-info fl" role="button">类目回收站</a>
+        <a href="{:url('admin/cate/index')}" class="btn btn-info fl" role="button">返回</a>
         <br>
           <div class="card-block pb-0">
             <div class="card">
               <table class="table table-hover table-outline mb-0 hidden-sm-down">
                 <thead class="thead-default">
-                  <tr>
-                  <th class="text-center">ID</th>
-                  <th class="text-center">栏目名称</th>
-                  <th class="text-center">添加时间</th>
-                  <th class="text-center">操作</th>
-                  </tr>
-                </thead>
-                {volist name="cates" id="cate" empty="暂时没有数据请先添加类目"}
-                  <tbody>
-                      <td class="text-center">{$cate.id}</td>
-                      <td class="text-center"><a class="nav-link" href="{:url('admin/book/index',['id'=>$cate.id])}">{$cate.catename}</a></td>
-                      <td class="text-center">{$cate.create_time}</td>
-                      <td class="text-center">
-                      <a href="{:url('admin/cate/edit', ['id' => $cate.id])}" class="btn btn-warning btn-sm" role="button">修改</a>
-                      <a href="#" class="btn btn-danger btn-sm del" role="button" data-id="{$cate.id}">删除</a>
-                      </td>
-                 </tbody>
-                {/volist}
-              </table>
-              <div class="text-center">{$cates|raw}</div>
-            </div>
+            <tr>
+              <th>ID</th>
+              <th>栏目名称</th>
+              <th>删除时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {volist name="cates" id="cate"}
+            <tr>
+              <td>{$cate.id}</td>
+              <td>{$cate.catename}</td>
+              <td>{$cate.delete_time|date="Y-m-d H:i:s"}</td>
+              <td>
+                <a href="#" class="btn btn-danger btn-sm restore" role="button" data-id="{$cate.id}">恢复</a>
+              </td>
+            </tr>
+            {/volist}
+          </tbody>
+        </table>
+        <div class="text-center">{$cates|raw}</div>
+       </div>
           </div>
         </main>
     </div>
     <script src="/static/libs/jquery.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/libs/layer/layer/layer.js"></script>
-    <script>
-    $(function() {
-      $('.del').click(function() {
+  <script>
+  	$(function() {
+      $('.restore').click(function() {
         var id = $(this).data('id');  // 获取data-id的值
-        layer.confirm('确定删除么? ', {
-          title: '栏目删除',
+        layer.confirm('确定恢复么? ', {
+          title: '栏目恢复',
           icon: 3  // 问号
         }, function(index) {
           layer.close(index); // 关闭确认对话框
           $.ajax({
-            url: '{:url('admin/cate/del')}',
+            url: '{:url('admin/cate/restore')}',
             type: 'POST',
             data: {id: id},
             dataType: 'json',
@@ -117,7 +118,7 @@
               });
             } else {
               layer.open({
-                title: '删除失败',
+                title: '恢复失败',
                 content: data.msg,
                 icon: 5,
                 anim: 6
@@ -127,31 +128,31 @@
         });
         return false;
       });
-      $('#logout').click(function() {
-        $.ajax({
-          url: '{:url('admin/login/logout')}',
-          type: 'POST',
-          dataType: 'json',
-        })
-        .done(function(data) {
-          if (data.code == 1) {
-            layer.msg(data.msg, {
-              icon: 6,
-              time: 2000
-            }, function() {
-              location = data.url;
-            });
-          } else {
-            layer.open({
-              title: '注销失败',
-              content: data.msg,
-              icon: 5,
-              anim: 6
-            });
-          }
-        });
-        return false;
-      });
+  		$('#logout').click(function() {
+  			$.ajax({
+  				url: '{:url('admin/login/logout')}',
+  				type: 'POST',
+  				dataType: 'json',
+  			})
+  			.done(function(data) {
+  				if (data.code == 1) {
+  					layer.msg(data.msg, {
+  						icon: 6,
+  						time: 2000
+  					}, function() {
+  						location = data.url;
+  					});
+  				} else {
+  					layer.open({
+  						title: '注销失败',
+  						content: data.msg,
+  						icon: 5,
+  						anim: 6
+  					});
+  				}
+  			});
+  			return false;
+  		});
       $('#sousuo').click(function() {
         $.ajax({
           url:'{:url('admin/book/sousuo')}',
@@ -178,7 +179,7 @@
         });
         return false;
       });
-    });
-  </script>  
+  	});
+  </script>
 </body>
 </html>

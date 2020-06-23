@@ -4,7 +4,7 @@ namespace app\admin\validate;
 
 use think\Validate;
 
-class News extends Validate
+class Book extends Validate
 {
     /**
      * 定义验证规则
@@ -14,7 +14,6 @@ class News extends Validate
      */	
 	protected $rule = [
         'title|新闻标题'=>'require',
-        'cate_id|所属栏目'=>'require',
         'content|新闻内容'=>'require',
     ];
     

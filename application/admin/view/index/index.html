@@ -1,112 +1,143 @@
-<html lang="zh-CN">
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>新闻系统后台</title>
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/css/dashboard.css" rel="stylesheet">
-  </head>
-
-  <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">切换导航</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">新闻后台</a>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
+    <meta name="author" content="Łukasz Holeczek">
+    <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,jQuery,CSS,HTML,RWD,Dashboard">
+    <link rel="shortcut icon" href="img/favicon.png">
+    <title>图书管理系统后台</title>
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/static/css/simple-line-icons.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+    <header class="app-header navbar">
+        <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">☰</button>
+        <a class="navbar-brand" href="#"></a>
+        <ul class="nav navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <form >
+            <input type="text" placeholder="请搜索" name="text">
+            <button type="submit" id="sousuo" class="btn btn-sm btn-primary">搜索</button>
+          </form>
+          </li>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+            <li class="nav-item dropdown">
+                <a class="nav-link navbar-toggler" href="#">{:session('admin.username')}！欢迎您！</a>
+            </li>
+            <li class="">
+                <a class="nav-link navbar-toggler aside-menu-toggler" href="#" id="logout">退出</a>
+            </li>
+        </ul>
+    </header>
+    <div class="app-body">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link  active" href="{:url('admin/index/index')}"><i class="icon-speedometer"></i> 后台首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{:url('admin/cate/add')}"><i class="icon-puzzle"></i>类目添加</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{:url('admin/cate/index')}"><i class="icon-star"></i> 类目列表</a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">{:session('admin.username')}</a></li>
-            <li><a href="#" id="logout">管理员注销</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="{:url('admin/index/index')}">后台首页</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-            <li><a href="{:url('admin/cate/index')}">栏目列表</a></li>
-            <li><a href="{:url('admin/cate/add')}">栏目添加</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-            <li><a href="{:url('admin/news/index')}">新闻列表</a></li>
-            <li><a href="{:url('admin/news/add')}">新闻添加</a></li>
-            </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">后台首页</h1>
-          <div class="mell">
-          	<h1>{:session('admin.username')},欢迎访问新闻系统后台！</h1>
+        <main class="main">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active">后台首页</li>
+        </ol>
+          <div class="card-block pb-0">
+            <div class="card">
+              <table class="table table-hover table-outline mb-0 hidden-sm-down">
+                <thead class="thead-default">
+                  <tr>
+                  <th>服务器信息</th>
+                  <th></th>
+                  </tr>
+                </thead>
+                  <tbody>
+                    <tr>
+                     <th>服务器域名</th>
+                      <td class="text-center">{$Request.domain}</td>
+                    </tr>
+                    <tr>
+                     <th>服务器IP</th>
+                      <td class="text-center">{$Request.ip}</td>
+                    </tr>
+                    <tr>
+                      <th>服务器端口</th>
+                       <td class="text-center">{$Request.port}</td>
+                    </tr>
+                  </tbody>
+              </table>
+            </div>
           </div>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th colspan="2">服务器信息</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>服务器域名</td>
-                  <td>{$Request.domain}</td>
-                </tr>
-                <tr>
-                  <td>服务器IP</td>
-                  <td>{$Request.ip}</td>
-                </tr>
-                <tr>
-                  <td>服务器端口</td>
-                  <td>{$Request.port}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+        </main>
     </div>
     <script src="/static/libs/jquery.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
-	<script src="/static/libs/layer/layer/layer.js"></script>
-	<script>
-		$(function() {
-			$('#logout').click(function() {
-				$.ajax({
-					url:'{:url('admin/login/logout')}',
-					type:'POST',
-					dataType:'json',
-				})
-				.done(function(data){
-					if(data.code==1){
-						layer.msg(data.msg, {
-							icon:6,
-							time:2000
-						}, function() {
-							location=data.url;
-						});
-					}else{
-						layer.open({
-							title:'注销失败',
-							content:data.msg,
-							icon:5,
-							anim:6
-						});
-					}
-				});
-				return false;
-			});
-		});
-	</script>
-  </body>
+    <script src="/static/libs/layer/layer/layer.js"></script>
+    <script>
+    $(function() {
+      $('#logout').click(function() {
+        $.ajax({
+          url: '{:url('admin/login/logout')}',
+          type: 'POST',
+          dataType: 'json',
+        })
+        .done(function(data) {
+          if (data.code == 1) {
+            layer.msg(data.msg, {
+              icon: 6,
+              time: 2000
+            }, function() {
+              location = data.url;
+            });
+          } else {
+            layer.open({
+              title: '注销失败',
+              content: data.msg,
+              icon: 5,
+              anim: 6
+            });
+          }
+        });
+        return false;
+      });
+      $('#sousuo').click(function() {
+        $.ajax({
+          url:'{:url('admin/book/sousuo')}',
+          type:'POST',
+          data:$('form').serialize(),
+          dataType:'json',
+        })
+        .done(function(data){
+          if(data.code==1){
+            layer.msg(data.msg, {
+              icon:6,
+              time:2000
+            }, function() {
+              location=data.url;
+            });
+          }else{
+            layer.open({
+              title:'搜索失败',
+              content:data.msg,
+              icon:5,
+              anim:6
+            });
+            }
+        });
+        return false;
+      });
+    });
+  </script>   
+</body>
 </html>

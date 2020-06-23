@@ -22,20 +22,22 @@ Route::group('admin',function(){
     Route::rule('zc','admin/login/zhuce','get|post');
     Route::rule('logout','admin/login/logout','post');
     
-    Route::rule('cate','admin/cate/index','get|post');
-    Route::rule('catesort','admin/cate/sort','get|post');
-    Route::rule('cateadd','admin/cate/add','get|post');
-    Route::rule('cateedit/[:id]','admin/cate/edit','get|post');
-    Route::rule('catedel','admin/cate/del','post');
-    Route::rule('catehsz','admin/cate/hsz','get|post');
-    Route::rule('catehhuifu','admin/cate/huifu','post');
+    Route::rule('cate', 'admin/cate/index', 'get');
+    Route::rule('cateadd', 'admin/cate/add', 'get|post');
+    Route::rule('cateedit/[:id]', 'admin/cate/edit', 'get|post');
+    Route::rule('catedel', 'admin/cate/del', 'post');
+    Route::rule('caterecycle', 'admin/cate/recycle', 'get');
+    Route::rule('caterestore', 'admin/cate/restore', 'post');
 
-    Route::rule('news','admin/news/index','get');
-    Route::rule('newsadd','admin/news/add','get|post');
-    Route::rule('newsedit/[:id]','admin/news/edit','get|post');
-    Route::rule('newsdel','admin/news/del','post');
-    Route::rule('newshsz','admin/news/hsz','get|post');
-    Route::rule('newshhuifu','admin/news/huifu','post');
+
+    Route::rule('book/[:id]','admin/book/index','get|post');
+    Route::rule('bookadd/id/[:id]','admin/book/add','get|post');
+    Route::rule('bookedit/[:id]','admin/book/edit','get|post');
+    Route::rule('bookdel','admin/book/del','post');
+    Route::rule('bookhsz/[:id]','admin/book/hsz','get|post');
+    Route::rule('bookhhuifu','admin/book/huifu','post');
+    Route::rule('booksousuo','admin/book/sousuo','get|post');
+    Route::rule('booksousuoxs/[:text]','admin/book/sousuoxs','get|post');
 });
 Route::rule('/','index/index/index','get');
 Route::rule('/id/[:id]','index/index/index','get');

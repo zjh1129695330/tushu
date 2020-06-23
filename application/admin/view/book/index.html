@@ -8,15 +8,28 @@
     <meta name="author" content="Łukasz Holeczek">
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,jQuery,CSS,HTML,RWD,Dashboard">
     <link rel="shortcut icon" href="img/favicon.png">
-    <title>图书管理系统类目页</title>
+    <title>图书管理系统图书页</title>
     <link href="/static/css/font-awesome.min.css" rel="stylesheet">
     <link href="/static/css/simple-line-icons.css" rel="stylesheet">
     <link href="/static/css/style.css" rel="stylesheet">
-     <style type="text/css">
+    <style type="text/css">
+      .fr{
+        float: right;
+        margin-right: 2em;
+      }
       .fl{
         float: left;
         margin-left: 1.5em;
       }
+      .text{
+        width: 200px;
+      display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+      } 
     </style>
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
@@ -57,34 +70,41 @@
         </div>
         <main class="main">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item active">类目列表</li>
+            <li class="breadcrumb-item active">类目列表->图书列表</li>
         </ol>
-        <a href="{:url('admin/cate/recycle')}" class="btn btn-info fl" role="button">类目回收站</a>
+        <a href="{:url('admin/book/add', ['id' => $id])}" class="btn btn-info fl" role="button">添加</a>
+        <a href="{:url('admin/book/hsz', ['id' => $id])}" class="btn btn-info fl" role="button">回收站</a>
+        <a href="{:url('admin/cate/index')}" class="btn btn-primary fr" role="button">返回</a>
         <br>
           <div class="card-block pb-0">
+
             <div class="card">
               <table class="table table-hover table-outline mb-0 hidden-sm-down">
                 <thead class="thead-default">
                   <tr>
                   <th class="text-center">ID</th>
-                  <th class="text-center">栏目名称</th>
+                  <th class="text-center">类目名称</th>
+                  <th class="text-center">图书名称</th>
+                  <th class="text-center">图书简介</th>
                   <th class="text-center">添加时间</th>
                   <th class="text-center">操作</th>
                   </tr>
                 </thead>
-                {volist name="cates" id="cate" empty="暂时没有数据请先添加类目"}
+                {volist name="books" id="book" empty="暂时没有数据请先添加图书"}
                   <tbody>
-                      <td class="text-center">{$cate.id}</td>
-                      <td class="text-center"><a class="nav-link" href="{:url('admin/book/index',['id'=>$cate.id])}">{$cate.catename}</a></td>
-                      <td class="text-center">{$cate.create_time}</td>
+                      <td class="text-center">{$book.id}</td>
+                      <td class="text-center">{$book.cate.catename}</td>
+                      <td class="text-center">{$book.title}</td>
+                      <td><p class="text">{$book.content}</p>...</td>
+                      <td class="text-center">{$book.create_time}</td>
                       <td class="text-center">
-                      <a href="{:url('admin/cate/edit', ['id' => $cate.id])}" class="btn btn-warning btn-sm" role="button">修改</a>
-                      <a href="#" class="btn btn-danger btn-sm del" role="button" data-id="{$cate.id}">删除</a>
+                      <a href="{:url('admin/book/edit', ['id' => $book.id])}" class="btn btn-warning btn-sm" role="button">修改</a>
+                      <a href="#" class="btn btn-danger btn-sm del" role="button" data-id="{$book.id}">删除</a>
                       </td>
                  </tbody>
                 {/volist}
               </table>
-              <div class="text-center">{$cates|raw}</div>
+              <div class="text-center">{$books|raw}</div>
             </div>
           </div>
         </main>
@@ -102,7 +122,7 @@
         }, function(index) {
           layer.close(index); // 关闭确认对话框
           $.ajax({
-            url: '{:url('admin/cate/del')}',
+            url: '{:url('admin/book/del')}',
             type: 'POST',
             data: {id: id},
             dataType: 'json',
